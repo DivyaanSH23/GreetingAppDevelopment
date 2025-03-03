@@ -17,12 +17,11 @@ public class HelloController {
         this.greetingService = greetingService;
     }
 
-    @GetMapping
-    public Greeting getGreeting(
-            @RequestParam(value = "firstName", required = false) String firstName,
-            @RequestParam(value = "lastName", required = false) String lastName) {
+    @PostMapping
+    public String getGreeting(@RequestBody String firstName, String lastName) {
 
-        String message = greetingService.getGreetingMessage(firstName, lastName);
-        return new Greeting(counter.incrementAndGet(), message);
+//        String message = greetingService.getGreetingMessage(firstName, lastName);
+//        return new Greeting(counter.incrementAndGet(), message);
+        return "hello"+firstName+lastName;
     }
 }
