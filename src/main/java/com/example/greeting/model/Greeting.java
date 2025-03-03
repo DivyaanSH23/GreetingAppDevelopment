@@ -11,8 +11,7 @@ public class Greeting {
     private Long id;
     private String message;
 
-    public Greeting() {
-    }
+    public Greeting() {}
 
     public Greeting(Long id, String message) {
         this.id = id;
