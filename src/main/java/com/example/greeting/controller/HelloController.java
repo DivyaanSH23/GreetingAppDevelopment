@@ -32,18 +32,4 @@ public class HelloController {
         return greetingService.getAllGreetings();
     }
 
-    @PostMapping
-    public Greeting createGreeting(@RequestBody Greeting greeting) {
-        return greetingService.createGreeting(greeting);
-    }
-
-    @PutMapping("/{id}")
-    public Greeting updateGreeting(@PathVariable Long id, @RequestBody Greeting greeting) {
-        return greetingService.updateGreeting(id, greeting);
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteGreeting(@PathVariable Long id) {
-        return greetingService.deleteGreeting(id);
-    }
 }
