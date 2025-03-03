@@ -42,6 +42,10 @@ public class HelloController {
         return greetingService.updateGreeting(id, greeting);
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteGreeting(@PathVariable Long id) {
+        return greetingService.deleteGreeting(id);
+    }
 
 
 
