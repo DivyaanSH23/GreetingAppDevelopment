@@ -13,32 +13,16 @@ public class HelloController {
     private final AtomicLong counter = new AtomicLong();
     private final GreetingService greetingService;
 
-    // Constructor-based Dependency Injection
     public HelloController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
 
     @GetMapping
-    public Greeting getGreeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        String message = greetingService.getGreetingMessage(name);
-        return new Greeting(counter.incrementAndGet(), message);
-    }
+    public Greeting getGreeting(
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName) {
 
-    @PostMapping
-    public Greeting createGreeting(@RequestBody Greeting greeting) {
-        String message = greetingService.createGreetingMessage(greeting.getMessage());
+        String message = greetingService.getGreetingMessage(firstName, lastName);
         return new Greeting(counter.incrementAndGet(), message);
-    }
-
-    @PutMapping
-    public Greeting updateGreeting(@RequestBody Greeting greeting) {
-        String message = greetingService.updateGreetingMessage(greeting.getMessage());
-        return new Greeting(counter.incrementAndGet(), message);
-    }
-
-    @DeleteMapping
-    public Greeting deleteGreeting() {
-        String message = greetingService.deleteGreetingMessage();
-        return new Greeting(0, message);
     }
 }
