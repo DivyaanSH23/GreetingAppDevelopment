@@ -18,6 +18,10 @@ public class AuthUserDTO {
     private String lastName;
 
     @NotBlank
+    @Email(message = "Invalid email format")
+    private String email;
+
+    @NotBlank
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 }
