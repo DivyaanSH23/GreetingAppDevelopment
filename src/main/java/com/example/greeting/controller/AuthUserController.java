@@ -2,33 +2,33 @@ package com.example.greeting.controller;
 
 import com.example.greeting.dto.AuthUserDTO;
 import com.example.greeting.dto.LoginDTO;
-import com.example.greeting.Services.AuthUserService;
-import io.swagger.v3.oas.annotations.Operation;
+import com.example.greeting.dto.ResponseDTO;
+import com.example.greeting.model.AuthUser;
+import com.example.greeting.service.AuthenticationService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/auth")
+//@RequestMapping("/auth")
 public class AuthUserController {
+    @Autowired
+    AuthenticationService authenticationService;
 
-    private final AuthUserService authUserService;
-
-    public AuthUserController(AuthUserService authUserService) {
-        this.authUserService = authUserService;
-    }
-
-    @Operation(summary = "Register a new user", description = "Creates a new user with email and password.")
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody AuthUserDTO userDTO) {
-        String response = authUserService.registerUser(userDTO);
-        return ResponseEntity.status(201).body(response);
+    public ResponseEntity<ResponseDTO> register(@Valid @RequestBody AuthUserDTO userDTO) throws Exception{
+        AuthUser user=authenticationService.register(userDTO);
+        ResponseDTO responseUserDTO =new ResponseDTO("User details is submitted!",user);
+        return new ResponseEntity<>(responseUserDTO, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "User login", description = "Logs in a user and returns a JWT token.")
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
-        String token = authUserService.loginUser(loginDTO);
-        return ResponseEntity.ok().body("{\"message\": \"Login successful!\", \"token\": \"" + token +"\"}");
-}
+    public ResponseEntity<ResponseDTO> login(@Valid @RequestBody LoginDTO loginDTO){
+        String result=authenticationService.login(loginDTO);
+        ResponseDTO responseUserDTO=new ResponseDTO("Login successfully!!",result);
+        return  new ResponseEntity<>(responseUserDTO,HttpStatus.OK);
+    }
 }

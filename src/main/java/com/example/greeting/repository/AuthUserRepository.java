@@ -1,9 +1,17 @@
 package com.example.greeting.repository;
 
 import com.example.greeting.model.AuthUser;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+@Repository
 public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
-    Optional<AuthUser> findByEmail(String email);
+    @Query(value = "SELECT * FROM AUTH_USER WHERE EMAIL = :email", nativeQuery = true)
+    AuthUser findByEmail(@Param("email") String email);
+    AuthUser findByResetToken(String resetToken);
 }

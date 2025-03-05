@@ -1,9 +1,10 @@
 package com.example.greeting.config;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 
 @Configuration
 public class SwaggerConfig {
@@ -14,6 +15,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Greeting App API")
                         .version("1.0")
-                        .description("API documentation for the Greeting Application"));
-}
+                        .license(new License().name("Apache 2.0").url("http://springdoc.org")));
+    }
 }
